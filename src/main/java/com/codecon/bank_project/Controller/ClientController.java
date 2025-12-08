@@ -3,9 +3,9 @@ package com.codecon.bank_project.Controller;
 import com.codecon.bank_project.Dtos.ClientRequest;
 import com.codecon.bank_project.Dtos.ClientResponse;
 import com.codecon.bank_project.Service.ClientService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,7 +34,7 @@ public class ClientController {
     }
 
     @PostMapping
-    public ClientResponse create(@Validated @RequestBody ClientRequest clientRequest){
+    public ClientResponse create(@Valid @RequestBody ClientRequest clientRequest){
         return clientService.save(clientRequest);
     }
 
@@ -45,7 +45,7 @@ public class ClientController {
     }
 
     @PutMapping("/{id}")
-    public ClientResponse update(@PathVariable UUID id, @Validated @RequestBody ClientRequest clientRequest){
+    public ClientResponse update(@PathVariable UUID id, @Valid @RequestBody ClientRequest clientRequest){
         return clientService.update(id,clientRequest);
     }
 }

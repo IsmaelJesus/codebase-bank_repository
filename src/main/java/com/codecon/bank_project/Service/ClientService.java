@@ -3,6 +3,7 @@ package com.codecon.bank_project.Service;
 import java.util.List;
 import java.util.UUID;
 
+import com.codecon.bank_project.Exceptions.InvalidInformationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,11 @@ public class ClientService {
     private ClientRepository clientRepository;
 
     public ClientResponse save(ClientRequest clientRequest){
+
+        if (!Utils.Utils.cpfValidator(clientRequest.cpf())) throw new InvalidInformationException("The cpf provided is invalid");
+
+        //Validate the date birth
+        Utils.Utils.dateBrithValidate(clientRequest.dateBirth());
 
         Address address = AddressMapper.clientRequestToEntity(clientRequest);
 
@@ -60,6 +66,11 @@ public class ClientService {
     }
 
     public ClientResponse update(UUID id, ClientRequest clientRequest){
+
+        if (!Utils.Utils.cpfValidator(clientRequest.cpf())) throw new IllegalArgumentException("The cpf provided is invalid");
+
+        //Validate the date birth
+        Utils.Utils.dateBrithValidate(clientRequest.dateBirth());
 
         Client client = clientRepository.findById(id).orElseThrow(() -> new ClientNotFoundException("Client not found"));
 

@@ -15,8 +15,6 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 public class SavingsAccount extends Account {
-    private int quantityMonths;
-
     @Builder
     public SavingsAccount(Long id, Long number, Long agency, LocalDateTime createdAt, LocalDateTime updatedAt, Client client) {
         super(id, number, agency, createdAt, updatedAt, client);

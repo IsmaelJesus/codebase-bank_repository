@@ -1,11 +1,12 @@
 package com.codecon.bank_project.Controller;
 
 import com.codecon.bank_project.Dtos.*;
-import com.codecon.bank_project.Entity.Account;
 import com.codecon.bank_project.Interfaces.IAccountResponse;
 import com.codecon.bank_project.Service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
+
 
 import java.util.List;
 
@@ -32,8 +33,7 @@ public class AccountController {
     }
 
     @PostMapping
-    public IAccountResponse create(@RequestBody AccountRequest accountRequest){
-
+    public IAccountResponse create(@Valid @RequestBody AccountRequest accountRequest){
         return accountService.create(accountRequest);
     }
 
