@@ -13,7 +13,6 @@ import java.util.Objects;
 
 public class AccountMapper {
     public static CurrentAccount toCurrentEntity(AccountRequest accountRequest, Client client) {
-        System.out.println(client);
         return CurrentAccount.builder()
                 .number(accountRequest.number())
                 .agency(accountRequest.agency())

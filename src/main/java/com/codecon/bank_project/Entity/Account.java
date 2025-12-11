@@ -7,6 +7,7 @@ import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -36,6 +37,9 @@ public abstract class Account {
     @ManyToOne
     @NotNull(message = "The account client cannot be empty")
     protected Client client;
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    protected List<Card> cards;
 
     public Account(Long id, Long number, Long agency, LocalDateTime createdAt, LocalDateTime updatedAt, Client client){
         this.id = id;

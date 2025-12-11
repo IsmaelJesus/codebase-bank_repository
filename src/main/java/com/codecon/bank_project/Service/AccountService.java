@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class AccountService extends Account {
@@ -63,7 +62,7 @@ public class AccountService extends Account {
     }
 
     public IAccountResponse getByAccountNumber(Long number, Long agency) {
-        Account account = accountRepository.getByNumberAndAgency(number, agency).orElseThrow(() -> new AccountNotFoundException("Account not found"));
+        Account account = accountRepository.findByNumberAndAgency(number, agency).orElseThrow(() -> new AccountNotFoundException("Account not found"));
 
         if(account instanceof CurrentAccount){
             return AccountMapper.toCurrentResponse(account);
@@ -75,7 +74,7 @@ public class AccountService extends Account {
     }
 
     public IAccountResponse update(Long number,Long agency, AccountRequest accountRequest){
-        Account account = accountRepository.getByNumberAndAgency(number, agency)
+        Account account = accountRepository.findByNumberAndAgency(number, agency)
                 .orElseThrow(() -> new AccountNotFoundException("Account not found"));
 
         account = AccountMapper.toUpdate(account,accountRequest);
@@ -94,20 +93,20 @@ public class AccountService extends Account {
     }
 
     public void delete(Long number,Long agency) {
-        Account account = accountRepository.getByNumberAndAgency(number,agency).orElseThrow(() -> new AccountNotFoundException("Account not found"));
+        Account account = accountRepository.findByNumberAndAgency(number,agency).orElseThrow(() -> new AccountNotFoundException("Account not found"));
 
         accountRepository.delete(account);
     }
 
     public BigDecimal getBalance(Long number, Long agency){
-        Account account = accountRepository.getByNumberAndAgency(number,agency)
+        Account account = accountRepository.findByNumberAndAgency(number,agency)
                 .orElseThrow(() -> new AccountNotFoundException("Account not found"));
 
         return account.getBalance();
     }
 
     public void deposit(Long number, Long agency, DepositRequest  depositRequest) {
-        Account account =  accountRepository.getByNumberAndAgency(number,agency)
+        Account account =  accountRepository.findByNumberAndAgency(number,agency)
                 .orElseThrow(() -> new AccountNotFoundException("Account not found"));
 
         account.deposit(depositRequest.amount());
@@ -116,7 +115,7 @@ public class AccountService extends Account {
     }
 
     public void withdraw(Long number, Long agency, WithdrawRequest  withdrawRequest){
-        Account account =  accountRepository.getByNumberAndAgency(number,agency)
+        Account account =  accountRepository.findByNumberAndAgency(number,agency)
                 .orElseThrow(() -> new AccountNotFoundException("Account not found"));
 
         account.withdraw(withdrawRequest.amount());
@@ -129,8 +128,8 @@ public class AccountService extends Account {
             throw new IllegalArgumentException("Amount is null");
         }
 
-        Account accountPayer = accountRepository.getByNumberAndAgency(transferenceRequest.payerNumberAccount(),transferenceRequest.payerNumberAgency()).orElseThrow(() -> new AccountNotFoundException("Account not found"));
-        Account accountPayee = accountRepository.getByNumberAndAgency(transferenceRequest.payeeNumberAccount(),transferenceRequest.payeeNumberAgency()).orElseThrow(() -> new AccountNotFoundException("Account not found"));
+        Account accountPayer = accountRepository.findByNumberAndAgency(transferenceRequest.payerNumberAccount(),transferenceRequest.payerNumberAgency()).orElseThrow(() -> new AccountNotFoundException("Account not found"));
+        Account accountPayee = accountRepository.findByNumberAndAgency(transferenceRequest.payeeNumberAccount(),transferenceRequest.payeeNumberAgency()).orElseThrow(() -> new AccountNotFoundException("Account not found"));
 
         accountPayer.withdraw(transferenceRequest.amount());
         accountPayee.deposit(transferenceRequest.amount());
@@ -140,7 +139,7 @@ public class AccountService extends Account {
     }
 
     public void creditIncoming(Long  number, Long agency){
-        Account account = accountRepository.getByNumberAndAgency(number,agency).orElseThrow(() -> new AccountNotFoundException("Account not found"));
+        Account account = accountRepository.findByNumberAndAgency(number,agency).orElseThrow(() -> new AccountNotFoundException("Account not found"));
 
         if(account instanceof SavingsAccount){
             Client client = clientRepository.findById(account.getClient().getId()).orElseThrow(() -> new AccountNotFoundException("Client not found"));
@@ -151,7 +150,7 @@ public class AccountService extends Account {
         }
     }
     public void maintenanceFee(Long  number, Long agency){
-        Account account = accountRepository.getByNumberAndAgency(number,agency).orElseThrow(() -> new AccountNotFoundException("Account not found"));
+        Account account = accountRepository.findByNumberAndAgency(number,agency).orElseThrow(() -> new AccountNotFoundException("Account not found"));
 
         if(account instanceof CurrentAccount){
             Client client = clientRepository.findById(account.getClient().getId()).orElseThrow(() -> new AccountNotFoundException("Client not found"));

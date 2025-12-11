@@ -7,5 +7,5 @@ import java.util.Optional;
 
 public interface AccountRepository extends JpaRepository<Account, Long> {
 
-    public Optional<Account> getByNumberAndAgency(Long number,Long agency);
+    public Optional<Account> findByNumberAndAgency(Long number, Long agency);
 }
