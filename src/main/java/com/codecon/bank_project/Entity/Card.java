@@ -16,8 +16,11 @@ public abstract class Card {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
+    @Column(unique = true, nullable = false)
     protected Long cardNumber;
+    @Column(nullable = false)
     protected int securityCode;
+    @Column(nullable = false)
     protected String password;
     protected boolean status;
     @ManyToOne
