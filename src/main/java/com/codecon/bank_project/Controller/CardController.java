@@ -30,14 +30,14 @@ public class CardController {
         cardService.create(cardRequest);
     }
 
-    @PostMapping("{card}/payment/")
+    @PostMapping("/{card}/payment")
     public void pay(@PathVariable Long card, @RequestBody PaymentRequest paymentRequest){
         cardService.Payment(card, paymentRequest);
     }
 
-    @PutMapping("/{cardNumber}/status")
-    public void changeStatus(@PathVariable Long cardNumber){
-        cardService.changeStatus(cardNumber);
+    @PutMapping("/{card}/status")
+    public void changeStatus(@PathVariable Long card){
+        cardService.changeStatus(card);
     }
 
     @PutMapping("/{card}/password")

@@ -10,7 +10,7 @@ public record CardRequest(
         String password,
         String confirmationPassword,
         BigDecimal limitCard,
-        int dailyLimit,
+        Integer dailyLimit,
         Long number,
         Long agency,
         CardTypeEnum cardType

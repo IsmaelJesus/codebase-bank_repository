@@ -30,9 +30,9 @@ public class DebitCard extends Card{
             throw new IllegalArgumentException("This card is deactivated");
         }
 
-       if((lastUseDate != null && lastUseDate.isEqual(LocalDate.now())) && dailyLimit <= dailyUseQuantity){
-           throw new PaymentException("The daily payment limit has been reached");
-       }
+        if(lastUseDate != null && lastUseDate.isEqual(LocalDate.now()) && dailyLimit <= dailyUseQuantity){
+            throw new PaymentException("The daily payment limit has been reached");
+        }
     }
 
     public void registerUse(){
