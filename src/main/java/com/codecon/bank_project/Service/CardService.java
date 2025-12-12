@@ -57,8 +57,6 @@ public class CardService {
             card = DebitCardMapper.cardToDebitCardEntity(cardRequest,account);
         }
 
-        card.setAccount(account);
-
         cardRepository.save(card);
     }
 

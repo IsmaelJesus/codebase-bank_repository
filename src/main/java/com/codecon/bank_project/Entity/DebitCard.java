@@ -21,6 +21,7 @@ public class DebitCard extends Card{
     @Builder
     public DebitCard(Long cardNumber,int securityCode,int dailyLimit,String password,Account account){
         super(cardNumber,securityCode,password,account);
+        this.dailyLimit=dailyLimit;
         this.dailyUseQuantity = 0;
         this.lastUseDate = null;
     }
